@@ -1,4 +1,4 @@
-#define ADAFRUIT_1918 11
+#define ADAFRUIT_1918 A0
 
 namespace GUVA
 {

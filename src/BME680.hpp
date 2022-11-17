@@ -25,7 +25,7 @@ namespace BME
             if (bme.begin())
             {
                 inited = true;
-                Serial.println("BME680 Initialized");
+                Serial.println("Initialized BME680");
                 digitalWrite(LED_PIN, HIGH);
             }
             else
@@ -49,7 +49,7 @@ namespace BME
         if (!bme.performReading())
         {
             Serial.println("Failed to perform reading :(");
-            log_file.print("N,N,N,N,N,");
+            log_file.print("0,0,0,0,0,");
             return {};
         }
 

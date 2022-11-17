@@ -36,6 +36,10 @@ void setup()
     digitalWrite(LED_PIN, LOW);
     delay(500);
   }
+  else
+  {
+    Serial.println("Log File Created");
+  }
 
   BME::init();
   BMP::init();
@@ -43,7 +47,8 @@ void setup()
   RAD::init();
 
   // put the meaning of values as headers in the file
-  log_file.println("millis,bmetemp(*C),bmepres(Pa),bmehum(%),bmegas_res(KOhm),bmealt(m),bmptemp(*C),bmppres(PA),bmpalt(m),acc (mg),gyr (deg/sec),mag (uT),UV [0-1023],VOC[0-1023],NO2[0-1023],CO[0-1023],NH3[0-1023],radiation count,rad count per min,uSv/h,uSv/h error,noise events");
+  log_file.println("millis,bmetemp(*C),bmepres(Pa),bmehum(%),bmegas_res(KOhm),bmealt(m),bmptemp(*C),bmppres(PA),bmpalt(m),accX (mg),accY (mg),accZ (mg),gyrX (deg/sec),gyrY (deg/sec),gyrZ (deg/sec),magX (uT),magY (uT),magZ (uT),UV [0-1023],NO2[0-1023],CO[0-1023],NH3[0-1023],radiation count,rad count per min,uSv/h,uSv/h error,noise events");
+  log_file.close();
 }
 
 void loop()
@@ -51,11 +56,18 @@ void loop()
   // Data format
   // millis , bmetemp(*C) , bmepres(Pa) , bmehum(%) , bmegas_res(KOhm) , bmealt(m) ,
   // bmptemp(*C) , bmppres(PA) , bmpalt(m) , acc (mg) , gyr (deg/sec) , mag (uT) ,
-  // UV [0, 1023] , VOC[0, 1023] , NO2[0, 1023] , CO[0, 1023] , NH3[0, 1023] ,
+  // UV [0, 1023] , NO2[0, 1023] , CO[0, 1023] , NH3[0, 1023] ,
   // radiation count , rad count per min , uSv / h , uSv/h error , noise events
+  log_file = SD.open("log.txt", FILE_WRITE);
+  if (!log_file)
+  {
+    Serial.println("Failed to open/create log.txt");
+    digitalWrite(LED_PIN, LOW);
+    delay(500);
+  }
+
   log_file.print(millis());
   log_file.print(",");
-
   // reading values writes to log
   // could do something with these values if desired
   auto bme_reading = BME::read(log_file);
@@ -67,5 +79,8 @@ void loop()
 
   log_file.println(""); // newline
 
-  delay(2000);
+  // Serial.println(log_file.getWriteError());
+  log_file.close();
+
+  delay(200);
 }

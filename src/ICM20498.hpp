@@ -27,7 +27,7 @@ namespace ICM
         {
             icm.begin(Wire);
 
-            Serial.print(F("Initialization of the sensor returned: "));
+            Serial.print(F("Initialization of the ICM returned: "));
             Serial.println(icm.statusString());
             if (icm.status != ICM_20948_Stat_Ok)
             {

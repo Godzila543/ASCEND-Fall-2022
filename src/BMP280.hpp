@@ -20,10 +20,10 @@ namespace BMP
         bool inited = false;
         while (!inited && i < 5)
         {
-            if (bmp.begin())
+            if (bmp.begin(0x76))
             {
                 inited = true;
-                Serial.println("BMP280 Initialized");
+                Serial.println("Initialized BMP280");
                 digitalWrite(LED_PIN, HIGH);
             }
             else
