@@ -24,7 +24,7 @@ namespace RAD
   void init()
   {
     geiger.setup();
-    geiger.registerRadiationCallback(&gammaCallback);
+    geiger.registerRadiationCallback(gammaCallback);
     geiger.registerNoiseCallback(noiseCallback);
     Serial.println("Initialized Geiger");
   }
